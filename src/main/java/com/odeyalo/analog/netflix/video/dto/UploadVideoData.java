@@ -8,25 +8,23 @@ import java.time.LocalDate;
 public class UploadVideoData extends GenericVideoData {
     private VideoType videoType;
     private String description;
-    private String poster;
     private LocalDate year;
 
     public UploadVideoData(String videoName, VideoType videoType,
-                           String description, String poster,
+                           String description,
                            LocalDate year) {
         super(videoName);
         this.videoType = videoType;
         this.description = description;
-        this.poster = poster;
         this.year = year;
     }
 
     public static UploadVideoData toUploadVideoData(Video video) {
-        return new UploadVideoData(video.getName(), video.getVideoType(), video.getDescription(), video.getPoster(), video.getYear());
+        return new UploadVideoData(video.getName(), video.getVideoType(), video.getDescription(), video.getYear());
     }
 
     public static UploadVideoData toUploadVideoData(UploadVideoDTO dto) {
-        return new UploadVideoData(dto.getName(), dto.getVideoType(), dto.getDescription(), dto.getPoster(), dto.getYear());
+        return new UploadVideoData(dto.getName(), dto.getVideoType(), dto.getDescription(), dto.getYear());
     }
 
     public VideoType getVideoType() {
@@ -43,14 +41,6 @@ public class UploadVideoData extends GenericVideoData {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
     }
 
     public LocalDate getYear() {

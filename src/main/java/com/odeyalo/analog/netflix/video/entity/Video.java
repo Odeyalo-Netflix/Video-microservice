@@ -1,10 +1,9 @@
 package com.odeyalo.analog.netflix.video.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +18,9 @@ public class Video {
     @Column(nullable = false)
     private String description;
     @Column(nullable = false)
-    private String streamUrl;
+    private String videoFileId;
     @Column(nullable = false)
-    private String poster;
+    private String posterFileId;
     @Column(nullable = false)
     private LocalDate year;
 
@@ -61,20 +60,20 @@ public class Video {
         return new VideoBuilder();
     }
 
-    public String getStreamUrl() {
-        return streamUrl;
+    public String getVideoFileId() {
+        return videoFileId;
     }
 
-    public void setStreamUrl(String streamUrl) {
-        this.streamUrl = streamUrl;
+    public void setVideoFileId(String streamUrl) {
+        this.videoFileId = streamUrl;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getPosterFileId() {
+        return posterFileId;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setPosterFileId(String poster) {
+        this.posterFileId = poster;
     }
 
     public LocalDate getYear() {
@@ -90,12 +89,12 @@ public class Video {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Video video = (Video) o;
-        return Objects.equals(id, video.id) && Objects.equals(name, video.name) && videoType == video.videoType && Objects.equals(description, video.description) && Objects.equals(streamUrl, video.streamUrl) && Objects.equals(poster, video.poster) && Objects.equals(year, video.year);
+        return Objects.equals(id, video.id) && Objects.equals(name, video.name) && videoType == video.videoType && Objects.equals(description, video.description) && Objects.equals(videoFileId, video.videoFileId) && Objects.equals(posterFileId, video.posterFileId) && Objects.equals(year, video.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, videoType, description, streamUrl, poster, year);
+        return Objects.hash(id, name, videoType, description, videoFileId, posterFileId, year);
     }
 
     @Override
@@ -105,10 +104,18 @@ public class Video {
                 ", name='" + name + '\'' +
                 ", videoType=" + videoType +
                 ", description='" + description + '\'' +
-                ", streamUrl='" + streamUrl + '\'' +
-                ", poster='" + poster + '\'' +
+                ", streamUrl='" + videoFileId + '\'' +
+                ", poster='" + posterFileId + '\'' +
                 ", year=" + year +
                 '}';
+    }
+
+    public static VideoBuilder builder() {
+        return new VideoBuilder();
+    }
+
+    public static VideoBuilder from(Video video) {
+        return new VideoBuilder(video);
     }
 
     public static final class VideoBuilder {
@@ -116,15 +123,21 @@ public class Video {
         private String name;
         private VideoType videoType;
         private String description;
-        private String streamUrl;
-        private String poster;
+        private String videoFileId;
+        private String posterFileId;
         private LocalDate year;
 
         private VideoBuilder() {
         }
 
-        public static VideoBuilder aVideo() {
-            return new VideoBuilder();
+        private VideoBuilder(Video video) {
+            this.videoType = video.getVideoType();
+            this.videoFileId = video.getVideoFileId();
+            this.description = video.getDescription();
+            this.posterFileId = video.getPosterFileId();
+            this.name = video.getName();
+            this.id = video.getId();
+            this.year = video.getYear();
         }
 
         public VideoBuilder id(String id) {
@@ -147,13 +160,13 @@ public class Video {
             return this;
         }
 
-        public VideoBuilder streamUrl(String streamUrl) {
-            this.streamUrl = streamUrl;
+        public VideoBuilder videoFileId(String videoFileId) {
+            this.videoFileId = videoFileId;
             return this;
         }
 
-        public VideoBuilder poster(String poster) {
-            this.poster = poster;
+        public VideoBuilder posterFileId(String posterFileId) {
+            this.posterFileId = posterFileId;
             return this;
         }
 
@@ -170,8 +183,8 @@ public class Video {
             video.setName(name);
             video.setVideoType(videoType);
             video.setDescription(description);
-            video.poster = this.poster;
-            video.streamUrl = this.streamUrl;
+            video.posterFileId = this.posterFileId;
+            video.videoFileId = this.videoFileId;
             video.year = this.year;
             return video;
         }

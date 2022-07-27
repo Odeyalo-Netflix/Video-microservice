@@ -49,6 +49,7 @@ public class VideoController {
     @PostMapping(value = "/upload")
     public ResponseEntity<?> uploadVideo(@RequestPart UploadVideoDTO dto, @RequestPart MultipartFile video, @RequestPart MultipartFile poster) throws VideoUploadException, PosterUploadException {
         this.logger.info("Dto: {}, video: {}, poster: {}", dto, video.getOriginalFilename(), poster.getOriginalFilename());
+
         this.videoUploadServiceFacade.uploadVideo(dto, video, poster);
         return ResponseEntity.ok().build();
     }

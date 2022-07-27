@@ -1,36 +1,35 @@
 package com.odeyalo.analog.netflix.video.service.video.steps;
 
-import com.odeyalo.analog.netflix.video.dto.UploadVideoData;
+import com.odeyalo.analog.netflix.video.entity.Video;
 import com.odeyalo.analog.netflix.video.service.FileUploader;
-import com.odeyalo.analog.netflix.video.service.video.steps.dto.VideoFileUploadVideoSaveWorkflowMessage;
+import com.odeyalo.analog.netflix.video.service.video.dto.UploadVideoInformation;
+import com.odeyalo.support.clients.filestorage.dto.SuccessUploadVideoResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-
 @Service
-public class UploadVideoFileVideoSaveWorkflowStep implements VideoSaveWorkflowStep<VideoFileUploadVideoSaveWorkflowMessage> {
-    private final FileUploader<?> fileUploader;
+@Order(value = 1)
+public class UploadVideoFileVideoSaveWorkflowStep implements VideoSaveWorkflowStep {
+    private final FileUploader<SuccessUploadVideoResponseDTO> fileUploader;
+    private final Logger logger = LoggerFactory.getLogger(UploadVideoFileVideoSaveWorkflowStep.class);
 
-    public UploadVideoFileVideoSaveWorkflowStep(@Qualifier("asyncVideoFileUploader") FileUploader<?> fileUploader) {
+    @Autowired
+    public UploadVideoFileVideoSaveWorkflowStep(@Qualifier("videoFileUploader") FileUploader<SuccessUploadVideoResponseDTO> fileUploader) {
         this.fileUploader = fileUploader;
     }
 
     @Override
-    public VideoSaveWorkflowStepStatus getStatus() {
-        return VideoSaveWorkflowStepStatus.VIDEO_FILE_SAVING_PROCESS_STATUS;
-    }
-
-    @Override
-    public void process(VideoFileUploadVideoSaveWorkflowMessage data) {
-        MultipartFile videoFile = data.getVideoFile();
-        this.fileUploader.uploadFile(videoFile);
-    }
-
-    @Override
-    public void revert(VideoFileUploadVideoSaveWorkflowMessage data) {
-
+    public void process(UploadVideoInformation information, Video video) {
+        this.logger.info("Starting video file uploading process. Video information {}, raw video: {}", information, video);
+        MultipartFile videoFile = information.getVideoFile();
+        SuccessUploadVideoResponseDTO dto = this.fileUploader.uploadFile(videoFile);
+        String videoId = dto.getVideoId();
+        video.setVideoFileId(videoId);
+        this.logger.info("Successful saved video file: {}", videoId);
     }
 }

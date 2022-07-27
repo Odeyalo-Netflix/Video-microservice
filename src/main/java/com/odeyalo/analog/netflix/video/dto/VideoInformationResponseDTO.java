@@ -4,7 +4,6 @@ import com.odeyalo.analog.netflix.video.entity.Video;
 import com.odeyalo.analog.netflix.video.entity.VideoType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class VideoInformationResponseDTO {
     private String name;
@@ -15,7 +14,7 @@ public class VideoInformationResponseDTO {
     private LocalDate year;
 
     public static VideoInformationResponseDTO toVideoInformationResponse(Video video) {
-        return new VideoInformationResponseDTO(video.getName(), video.getVideoType(), video.getDescription(), video.getStreamUrl(), video.getPoster(), video.getYear());
+        return new VideoInformationResponseDTO(video.getName(), video.getVideoType(), video.getDescription(), video.getVideoFileId(), video.getPosterFileId(), video.getYear());
     }
 
     public VideoInformationResponseDTO(String name, VideoType videoType, String description, String streamUrl, String poster, LocalDate year) {

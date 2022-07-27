@@ -17,9 +17,9 @@ public class SimpleVideoManager implements VideoManager {
     private final VideoRepository videoRepository;
     private final Logger logger = LoggerFactory.getLogger(SimpleVideoManager.class);
     private final VideoSaverService videoSaverService;
-    private final AsyncVideoFileUploader uploader;
+    private final VideoFileUploader uploader;
 
-    public SimpleVideoManager(VideoRepository videoRepository, VideoSaverService videoSaverService, AsyncVideoFileUploader uploader) {
+    public SimpleVideoManager(VideoRepository videoRepository, VideoSaverService videoSaverService, VideoFileUploader uploader) {
         this.videoRepository = videoRepository;
         this.videoSaverService = videoSaverService;
         this.uploader = uploader;

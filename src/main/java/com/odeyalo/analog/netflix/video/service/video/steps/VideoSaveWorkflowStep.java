@@ -1,23 +1,14 @@
 package com.odeyalo.analog.netflix.video.service.video.steps;
 
-import com.odeyalo.analog.netflix.video.dto.UploadVideoData;
-import com.odeyalo.analog.netflix.video.service.video.steps.dto.VideoSaveWorkflowMessage;
+import com.odeyalo.analog.netflix.video.entity.Video;
+import com.odeyalo.analog.netflix.video.service.video.dto.UploadVideoInformation;
 
-public interface VideoSaveWorkflowStep<T extends VideoSaveWorkflowMessage> {
+public interface VideoSaveWorkflowStep {
     /**
      *
-     * @return - current status of the transaction
+     * @param information - to get information about video
+     * @param rawVideo - to build video entity
      */
-    VideoSaveWorkflowStepStatus getStatus();
+    void process(UploadVideoInformation information, Video rawVideo);
 
-    /**
-     * Process this step
-     */
-    void process(T message);
-
-
-    /**
-     * Revert transaction, if failed
-     */
-    void revert(T message);
 }
