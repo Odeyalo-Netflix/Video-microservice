@@ -11,8 +11,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.concurrent.CompletableFuture;
-
 @Service
 @Order(value = 2)
 public class UploadPosterFileVideoSaveWorkflowStep implements VideoSaveWorkflowStep {
