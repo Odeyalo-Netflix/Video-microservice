@@ -1,10 +1,7 @@
 package com.odeyalo.analog.netflix.video.service;
 
-import com.odeyalo.analog.netflix.video.dto.UploadVideoData;
 import com.odeyalo.analog.netflix.video.entity.Video;
-import com.odeyalo.analog.netflix.video.exceptions.VideoUploadException;
 import com.odeyalo.analog.netflix.video.repository.VideoRepository;
-import com.odeyalo.analog.netflix.video.service.storage.VideoStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
