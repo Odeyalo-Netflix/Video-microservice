@@ -22,11 +22,8 @@ public class VideoUploadServiceFacadeImpl implements VideoUploadServiceFacade {
         this.manager = manager;
     }
 
-    // Todo: Maybe rewrite it using saga pattern using events
-    //  such VIDEO_SUCCESS_UPLOADED_EVENT - listen to this event using kafka and
-    //  continue work when everything is success
     @Override
-    public void uploadVideo(UploadVideoDTO dto, MultipartFile video, MultipartFile poster) throws PosterUploadException, VideoUploadException {
+    public void uploadVideo(UploadVideoDTO dto, MultipartFile video, MultipartFile poster) {
         UploadVideoData data = UploadVideoData.toUploadVideoData(dto);
         UploadVideoInformation uploadVideoInformation = new UploadVideoInformation(data, video, poster);
         this.logger.info("Starting saga with information: {}", uploadVideoInformation);
