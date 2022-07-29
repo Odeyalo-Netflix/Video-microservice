@@ -15,5 +15,4 @@ public class VideoMicroserviceApplication {
     public static void main(String[] args) {
         SpringApplication.run(VideoMicroserviceApplication.class, args);
     }
-
 }
