@@ -18,8 +18,9 @@ public class DefaultVideoSaverService implements VideoSaverService {
     }
 
     @Override
-    public void saveVideo(Video video) {
-        this.videoRepository.save(video);
-        this.logger.info("Successful saved video: {}", video);
+    public Video saveVideo(Video video) {
+        Video save = this.videoRepository.save(video);
+        this.logger.info("Successful saved video: {}", save);
+        return save;
     }
 }
