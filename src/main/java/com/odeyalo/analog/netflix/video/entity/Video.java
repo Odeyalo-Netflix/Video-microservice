@@ -1,8 +1,6 @@
 package com.odeyalo.analog.netflix.video.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
@@ -14,6 +12,7 @@ public class Video {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private VideoType videoType;
     @Column(nullable = false)
     private String description;
@@ -116,6 +115,20 @@ public class Video {
 
     public static VideoBuilder from(Video video) {
         return new VideoBuilder(video);
+    }
+
+    /**
+     * Copy video values to this object
+     * @param otherVideo - video that contains original values
+     */
+    public void copy(Video otherVideo) {
+        this.id = otherVideo.getId();
+        this.name = otherVideo.getName();
+        this.description = otherVideo.getDescription();
+        this.videoFileId = otherVideo.getVideoFileId();
+        this.posterFileId = otherVideo.getPosterFileId();
+        this.videoType = otherVideo.getVideoType();
+        this.year = otherVideo.getYear();
     }
 
     public static final class VideoBuilder {

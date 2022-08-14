@@ -7,6 +7,6 @@ public interface VideoSaverService {
      *
      * @param video - video entity to save
      */
-    void saveVideo(Video video);
+    Video saveVideo(Video video);
 
 }

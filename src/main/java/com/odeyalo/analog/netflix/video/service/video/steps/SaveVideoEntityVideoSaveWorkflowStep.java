@@ -32,9 +32,11 @@ public class SaveVideoEntityVideoSaveWorkflowStep implements VideoSaveWorkflowSt
         String posterFileId = rawVideo.getPosterFileId();
         Assert.notNull(videoFileId, "Video file id cannot be null!");
         Assert.notNull(posterFileId, "Poster file id cannot be null!");
-        Video video = buildVideo(information, rawVideo);
-        this.saverService.saveVideo(video);
-        this.logger.info("Successful saved video: {}", video);
+        Video builtVideo = buildVideo(information, rawVideo);
+        Video saved = this.saverService.saveVideo(builtVideo);
+        //Copy values from saved video to raw video for next saga steps(Without it some fields such video name or description will be null)
+        rawVideo.copy(saved);
+        this.logger.info("Successful saved video: {}", saved);
     }
 
     private Video buildVideo(UploadVideoInformation information, Video rawVideo) {

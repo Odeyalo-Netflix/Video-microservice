@@ -1,7 +1,6 @@
 package com.odeyalo.analog.netflix.video.service;
 
 import com.odeyalo.support.clients.filestorage.VideoControllerClient;
-import com.odeyalo.support.clients.filestorage.dto.SuccessUploadImageResponseDTO;
 import com.odeyalo.support.clients.filestorage.dto.SuccessUploadVideoResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +31,6 @@ public class VideoFileUploader implements FileUploader<SuccessUploadVideoRespons
     public SuccessUploadVideoResponseDTO uploadFile(MultipartFile file) {
         ResponseEntity<SuccessUploadVideoResponseDTO> response = client.saveVideo(file);
         SuccessUploadVideoResponseDTO body = response.getBody();
-//        SuccessUploadVideoResponseDTO body = send(file);
-//        SuccessUploadVideoResponseDTO body = send(file);
         this.logger.info("Video with id: {} was successful uploaded.", Objects.requireNonNull(body).getVideoId());
         return body;
     }

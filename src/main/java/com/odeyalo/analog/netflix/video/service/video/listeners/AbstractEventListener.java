@@ -1,6 +1,6 @@
 package com.odeyalo.analog.netflix.video.service.video.listeners;
 
-import com.odeyalo.analog.netflix.video.service.video.events.Event;
+import com.odeyalo.analog.netflix.video.service.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

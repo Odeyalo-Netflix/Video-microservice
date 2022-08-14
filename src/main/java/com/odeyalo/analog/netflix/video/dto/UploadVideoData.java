@@ -50,4 +50,13 @@ public class UploadVideoData extends GenericVideoData {
     public void setYear(LocalDate year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "UploadVideoData{" +
+                "videoType=" + videoType +
+                ", description='" + description + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }

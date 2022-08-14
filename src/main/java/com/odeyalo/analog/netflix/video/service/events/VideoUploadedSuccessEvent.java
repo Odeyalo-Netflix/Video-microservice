@@ -1,4 +1,4 @@
-package com.odeyalo.analog.netflix.video.service.video.events;
+package com.odeyalo.analog.netflix.video.service.events;
 
 public class VideoUploadedSuccessEvent extends Event {
     protected String videoId;
