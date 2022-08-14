@@ -1,6 +1,6 @@
 package com.odeyalo.analog.netflix.video.service.video.listeners;
 
-import com.odeyalo.analog.netflix.video.service.video.events.VideoUploadedSuccessEvent;
+import com.odeyalo.analog.netflix.video.service.events.VideoUploadedSuccessEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
