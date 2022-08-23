@@ -17,7 +17,7 @@ public interface VideoManager {
 
     void updateVideo(Video old, Video newVideo);
 
-    List<Video> getVideos();
+    List<Video> getVideosByUser(String userId);
 
     Video getVideo(String id);
 

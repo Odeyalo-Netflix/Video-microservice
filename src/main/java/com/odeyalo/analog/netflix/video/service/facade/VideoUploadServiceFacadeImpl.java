@@ -23,8 +23,8 @@ public class VideoUploadServiceFacadeImpl implements VideoUploadServiceFacade {
     }
 
     @Override
-    public void uploadVideo(UploadVideoDTO dto, MultipartFile video, MultipartFile poster) {
-        UploadVideoData data = UploadVideoData.toUploadVideoData(dto);
+    public void uploadVideo(UploadVideoDTO dto, String userId, MultipartFile video, MultipartFile poster) {
+        UploadVideoData data = UploadVideoData.toUploadVideoData(dto, userId);
         UploadVideoInformation uploadVideoInformation = new UploadVideoInformation(data, video, poster);
         this.logger.info("Starting saga with information: {}", uploadVideoInformation);
         this.manager.processSagaTransaction(uploadVideoInformation);

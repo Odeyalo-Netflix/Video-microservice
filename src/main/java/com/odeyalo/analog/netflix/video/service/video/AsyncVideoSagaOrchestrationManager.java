@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,5 +63,12 @@ public class AsyncVideoSagaOrchestrationManager implements SagaOrchestrationMana
             this.logger.error("Error during file copy.", ex);
             throw new WorkflowStepException("Cannot process video to server!");
         }
+    }
+
+    protected final void revertSagaTransaction(List<VideoSaveWorkflowStep> steps) {
+        Collections.reverse(steps);
+//        for (VideoSaveWorkflowStep step : steps) {
+//            step.revert();
+//        }
     }
 }

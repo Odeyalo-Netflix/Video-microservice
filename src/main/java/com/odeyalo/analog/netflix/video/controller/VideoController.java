@@ -1,5 +1,6 @@
 package com.odeyalo.analog.netflix.video.controller;
 
+import com.odeyalo.analog.netflix.video.configuration.security.AuthenticatedUserInformation;
 import com.odeyalo.analog.netflix.video.dto.UploadVideoDTO;
 import com.odeyalo.analog.netflix.video.dto.VideoInformationResponseDTO;
 import com.odeyalo.analog.netflix.video.entity.Video;
@@ -12,10 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,12 +42,22 @@ public class VideoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/user/list")
+    public ResponseEntity<?> getAllVideosByUser(Authentication authentication) {
+        Integer id = getUserId(authentication);
+        List<Video> videos = this.manager.getVideosByUser(String.valueOf(id));
+        return ResponseEntity.ok(videos);
+    }
+
 
     @PostMapping(value = "/upload")
-    public ResponseEntity<?> uploadVideo(@RequestPart UploadVideoDTO dto, @RequestPart MultipartFile video, @RequestPart MultipartFile poster) throws VideoUploadException, PosterUploadException {
+    public ResponseEntity<?> uploadVideo(@RequestPart UploadVideoDTO dto,
+                                         @RequestPart MultipartFile video,
+                                         @RequestPart MultipartFile poster,
+                                         Authentication authentication) throws VideoUploadException, PosterUploadException {
         this.logger.info("Dto: {}, video: {}, poster: {}", dto, video.getOriginalFilename(), poster.getOriginalFilename());
-
-        this.videoUploadServiceFacade.uploadVideo(dto, video, poster);
+        Integer userId = getUserId(authentication);
+        this.videoUploadServiceFacade.uploadVideo(dto, String.valueOf(userId), video, poster);
         Map<String, Object> body = new HashMap<>();
         body.put("status", "VIDEO_UPLOADING_STARTED");
         return ResponseEntity.ok(body);
@@ -61,4 +74,9 @@ public class VideoController {
         return null;
     }
 
+
+    private Integer getUserId(Authentication authentication) {
+        AuthenticatedUserInformation principal = (AuthenticatedUserInformation) authentication.getPrincipal();
+        return principal.getId();
+    }
 }

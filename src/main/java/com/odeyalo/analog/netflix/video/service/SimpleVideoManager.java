@@ -47,8 +47,8 @@ public class SimpleVideoManager implements VideoManager {
     }
 
     @Override
-    public List<Video> getVideos() {
-        return null;
+    public List<Video> getVideosByUser(String userId) {
+        return this.videoRepository.findAllByUserId(userId);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.odeyalo.analog.netflix.video.configuration.security;
 
 import com.odeyalo.analog.netflix.video.support.JwtTokenAuthenticatedUserInformationResolver;
-import com.odeyalo.analog.netflix.video.support.JwtTokenValidator;
+import com.odeyalo.netflix.jwt.JwtTokenValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

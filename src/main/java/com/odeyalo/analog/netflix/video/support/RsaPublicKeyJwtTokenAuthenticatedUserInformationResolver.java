@@ -1,6 +1,7 @@
 package com.odeyalo.analog.netflix.video.support;
 
 import com.odeyalo.analog.netflix.video.configuration.security.AuthenticatedUserInformation;
+import com.odeyalo.netflix.jwt.JwtTokenParser;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

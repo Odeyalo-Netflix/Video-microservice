@@ -9,8 +9,9 @@ public interface VideoUploadServiceFacade {
     /**
      *
      * @param dto - info about video
+     * @param userId - user that uploaded this video
      * @param video - file with video
      * @param poster - image to video
      */
-    void uploadVideo(UploadVideoDTO dto, MultipartFile video, MultipartFile poster) throws PosterUploadException, VideoUploadException;
+    void uploadVideo(UploadVideoDTO dto, String userId, MultipartFile video, MultipartFile poster) throws PosterUploadException, VideoUploadException;
 }

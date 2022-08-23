@@ -18,6 +18,8 @@ public class Video {
     private String description;
     @Column(nullable = false)
     private String videoFileId;
+    @Column(updatable = false, nullable = false)
+    private String userId;
     @Column(nullable = false)
     private String posterFileId;
     @Column(nullable = false)
@@ -131,11 +133,20 @@ public class Video {
         this.year = otherVideo.getYear();
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public static final class VideoBuilder {
         private String id;
         private String name;
         private VideoType videoType;
         private String description;
+        private String userId;
         private String videoFileId;
         private String posterFileId;
         private LocalDate year;
@@ -173,6 +184,11 @@ public class Video {
             return this;
         }
 
+        public VideoBuilder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
         public VideoBuilder videoFileId(String videoFileId) {
             this.videoFileId = videoFileId;
             return this;
@@ -199,6 +215,7 @@ public class Video {
             video.posterFileId = this.posterFileId;
             video.videoFileId = this.videoFileId;
             video.year = this.year;
+            video.userId = this.userId;
             return video;
         }
     }
