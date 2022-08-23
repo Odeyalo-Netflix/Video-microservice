@@ -30,4 +30,9 @@ public class UploadPosterFileVideoSaveWorkflowStep implements VideoSaveWorkflowS
         String posterFileId = dto.getId();
         rawVideo.setPosterFileId(posterFileId);
     }
+
+    @Override
+    public void revert(UploadVideoInformation information) {
+
+    }
 }

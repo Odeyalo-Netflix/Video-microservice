@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -17,10 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadVideoFileVideoSaveWorkflowStep implements VideoSaveWorkflowStep {
     private final FileUploader<SuccessUploadVideoResponseDTO> fileUploader;
     private final Logger logger = LoggerFactory.getLogger(UploadVideoFileVideoSaveWorkflowStep.class);
+    private final RestTemplate template;
 
     @Autowired
-    public UploadVideoFileVideoSaveWorkflowStep(@Qualifier("videoFileUploader") FileUploader<SuccessUploadVideoResponseDTO> fileUploader) {
+    public UploadVideoFileVideoSaveWorkflowStep(@Qualifier("videoFileUploader") FileUploader<SuccessUploadVideoResponseDTO> fileUploader, RestTemplate template) {
         this.fileUploader = fileUploader;
+        this.template = template;
     }
 
     @Override
@@ -31,5 +34,10 @@ public class UploadVideoFileVideoSaveWorkflowStep implements VideoSaveWorkflowSt
         String videoId = dto.getVideoId();
         video.setVideoFileId(videoId);
         this.logger.info("Successful saved video file: {}", videoId);
+    }
+
+    @Override
+    public void revert(UploadVideoInformation information ) {
+
     }
 }

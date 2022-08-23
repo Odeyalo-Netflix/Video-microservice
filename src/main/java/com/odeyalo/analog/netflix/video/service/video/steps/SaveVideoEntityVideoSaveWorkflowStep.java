@@ -39,12 +39,18 @@ public class SaveVideoEntityVideoSaveWorkflowStep implements VideoSaveWorkflowSt
         this.logger.info("Successful saved video: {}", saved);
     }
 
+    @Override
+    public void revert(UploadVideoInformation information) {
+
+    }
+
     private Video buildVideo(UploadVideoInformation information, Video rawVideo) {
         UploadVideoData data = information.getData();
         String description = data.getDescription();
         VideoType videoType = data.getVideoType();
         String videoName = data.getVideoName();
         LocalDate year = data.getYear();
-        return Video.from(rawVideo).videoType(videoType).description(description).name(videoName).year(year).build();
+        String userId = information.getData().getUserId();
+        return Video.from(rawVideo).videoType(videoType).description(description).name(videoName).year(year).userId(userId).build();
     }
 }

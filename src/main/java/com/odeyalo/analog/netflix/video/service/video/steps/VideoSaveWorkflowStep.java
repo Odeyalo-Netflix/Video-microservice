@@ -12,4 +12,5 @@ public interface VideoSaveWorkflowStep {
      */
     void process(UploadVideoInformation information, Video rawVideo) throws WorkflowStepException;
 
+    void revert(UploadVideoInformation information);
 }
