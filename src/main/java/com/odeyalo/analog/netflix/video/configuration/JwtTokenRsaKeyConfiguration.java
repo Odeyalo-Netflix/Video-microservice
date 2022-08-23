@@ -1,7 +1,7 @@
 package com.odeyalo.analog.netflix.video.configuration;
 
-import com.odeyalo.analog.netflix.video.exceptions.KeyConstructionException;
 import com.odeyalo.analog.netflix.video.support.*;
+import com.odeyalo.netflix.jwt.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +24,11 @@ public class JwtTokenRsaKeyConfiguration {
             @Value("${app.security.rsa.keys.public.filename}") String fileName,
             FileReader fileReader) {
         return new FileRsaPublicKeyResolver(fileName, fileReader);
+    }
+
+    @Bean
+    public JwtTokenParser rsaPublicKeyJwtTokenParser() {
+        return new RsaPublicKeyJwtTokenParser();
     }
 
     @Bean
