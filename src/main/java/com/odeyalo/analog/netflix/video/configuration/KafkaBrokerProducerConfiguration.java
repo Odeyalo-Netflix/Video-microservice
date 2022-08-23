@@ -48,8 +48,8 @@ public class KafkaBrokerProducerConfiguration {
     public ProducerFactory<String, SearchVideoEntity> searchVideoEntityProducerFactory() {
         return new DefaultKafkaProducerFactory<>(config());
     }
-    @Bean
 
+    @Bean
     public Map<String, Object> config() {
         HashMap<String, Object> config = new HashMap<>(5);
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_CONNECTION_URL);
