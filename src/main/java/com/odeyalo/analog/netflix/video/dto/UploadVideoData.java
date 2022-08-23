@@ -9,22 +9,24 @@ public class UploadVideoData extends GenericVideoData {
     private VideoType videoType;
     private String description;
     private LocalDate year;
+    private String userId;
 
     public UploadVideoData(String videoName, VideoType videoType,
                            String description,
-                           LocalDate year) {
+                           LocalDate year, String userId) {
         super(videoName);
         this.videoType = videoType;
         this.description = description;
         this.year = year;
+        this.userId = userId;
     }
 
     public static UploadVideoData toUploadVideoData(Video video) {
-        return new UploadVideoData(video.getName(), video.getVideoType(), video.getDescription(), video.getYear());
+        return new UploadVideoData(video.getName(), video.getVideoType(), video.getDescription(), video.getYear(), video.getUserId());
     }
 
-    public static UploadVideoData toUploadVideoData(UploadVideoDTO dto) {
-        return new UploadVideoData(dto.getName(), dto.getVideoType(), dto.getDescription(), dto.getYear());
+    public static UploadVideoData toUploadVideoData(UploadVideoDTO dto, String userId) {
+        return new UploadVideoData(dto.getName(), dto.getVideoType(), dto.getDescription(), dto.getYear(), userId);
     }
 
     public VideoType getVideoType() {
@@ -49,6 +51,14 @@ public class UploadVideoData extends GenericVideoData {
 
     public void setYear(LocalDate year) {
         this.year = year;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
