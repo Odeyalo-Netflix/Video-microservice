@@ -8,6 +8,7 @@ import com.odeyalo.analog.netflix.video.exceptions.PosterUploadException;
 import com.odeyalo.analog.netflix.video.exceptions.VideoUploadException;
 import com.odeyalo.analog.netflix.video.service.VideoManager;
 import com.odeyalo.analog.netflix.video.service.facade.VideoUploadServiceFacade;
+import com.odeyalo.analog.netflix.video.service.support.ResponseConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +27,21 @@ import java.util.Map;
 @CrossOrigin("*")
 public class VideoController {
     private final VideoManager manager;
-    private final Logger logger = LoggerFactory.getLogger(VideoController.class);
+    private final ResponseConverter<Video, VideoInformationResponseDTO> converter;
     private final VideoUploadServiceFacade videoUploadServiceFacade;
+    private final Logger logger = LoggerFactory.getLogger(VideoController.class);
 
     @Autowired
-    public VideoController(VideoManager manager, VideoUploadServiceFacade videoUploadServiceFacade) {
+    public VideoController(VideoManager manager, VideoUploadServiceFacade videoUploadServiceFacade, ResponseConverter<Video, VideoInformationResponseDTO> converter) {
         this.manager = manager;
         this.videoUploadServiceFacade = videoUploadServiceFacade;
+        this.converter = converter;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         Video video = this.manager.getVideo(id);
-        VideoInformationResponseDTO response = VideoInformationResponseDTO.toVideoInformationResponse(video);
+        VideoInformationResponseDTO response = converter.convert(video);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
