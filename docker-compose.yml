@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  video-microservice:
+    ports:
+      - "8090:8090"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video-microservice
+    volumes:
+      - "./maven-rep:/root/.m2"
+    environment:
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+    env_file:
+      - local.env
+    networks:
+      - netflix
+
+
+networks:
+  netflix:
+    external: true

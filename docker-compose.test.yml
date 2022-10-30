@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  video-microservice:
+    ports:
+      - "9000:9000"
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: video-microservice-test
+    environment:
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - "./maven-rep:/root/.m2"
+    env_file:
+      - test.env
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
